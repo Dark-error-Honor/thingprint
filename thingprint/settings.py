@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'akk&1%r_^-*64!-b1rfqo%5_(r%ayuqc+kr)#0xrj*2l5qj05i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['thingprint.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

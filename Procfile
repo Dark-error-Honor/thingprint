@@ -1,0 +1,1 @@
+web: gunicorn thingprint.wsgi --log-file -
