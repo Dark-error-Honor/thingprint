@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Checkout | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="checkout">
+        <div class="checkout-info">
+            <p class="order-total">Items: <span class="price-span"><span id="total-price">{{order.get_cart_items}}</span></span></p>
+            <p class="order-total">Total: <span class="price-span">€<span id="total-price">{{order.get_cart_total}}</span></span></p>
+        </div>
+        <div id="paypal-button-container"></div>
+    </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AdHpVADMnm2EpKhnpDErMw0D5s2Ey3Chj0imCB5eCpg6FIhq-BDmzYjhpXd9nyR4XRw2u9eAOZiXnGLr&currency=EUR&disable-funding=sofort"></script>
+{% comment %} Live Script <script src="https://www.paypal.com/sdk/js?client-id=AXvwPHJcFHx3lc8jdCSgd9kI86lG2xUXy78PzIupGpPntU-zD5i1pLgtNM8rZp2AjucIOxmEXzkcTtbB&currency=EUR&disable-funding=sofort"></script> {% endcomment %}
+    <script>
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        var total = '{{order.get_cart_total}}'
+        var code = '{{order.ref_code}}';
+
+        function completeOrder() {
+	        var url = "{% url 'order-complete' %}";
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({ 'code': code, 'total': total }),
+            }).then((res) => {
+                window.location.href = "/checkout/complete/" + code
+            })
+            
+        }
+
+        paypal
+            .Buttons({
+                // button styles
+                style: {
+                    color: 'blue',
+                    shape: 'pill',
+                    label: 'pay',
+                    height: 40,
+                },
+
+                // Set up the transaction
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [
+                            {
+                                amount: {
+                                    value: total,
+                                },
+                            },
+                        ],
+                    });
+                },
+
+                // Finalize the transaction
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        // Show a success message to the buyer
+                        completeOrder()
+                        alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    });
+                },
+            })
+            .render('#paypal-button-container');
+
+    </script>
+{% endblock content %}

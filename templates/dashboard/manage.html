@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Manage Things | ThingPrint
+{% endblock title %}
+
+{% block content %}
+{% if user.is_superuser %}
+<div class="item-container">
+    <div class="listitem-container">
+        {% for thing in things %}
+            <div class="list-item">
+                <p>ID: {{thing.id}}</p>
+                <p>Title: {{thing.title}}</p>
+                {% if thing.price == 0 %}
+                <p>Price: Free</p>
+                {% else %}
+                    <p>Price: €{{thing.price}}</p>
+                {% endif %}
+                {% if thing.image %}
+                    <p>image: {{thing.image.url}}</p>
+                {% else %}
+                    <p>image: No Image</p>
+                {% endif %}
+                <form method="POST"> {% csrf_token %}
+                    <a href="/dashboard/edit/{{thing.id}}">Edit</a>
+                    <a onclick='return confirm("Are you sure you want to delete: {{thing.title}}?")' href="/dashboard/remove/{{thing.id}}">Remove</a>
+                </form>
+            </div>
+        {% empty %}
+        <div class="dashboard-center">
+            <h1>No things...</h1>
+            <a class="link" href="/dashboard">Go to Dashboard</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="item-container">
+    <h1>U are not authorized</h1>
+</div>
+{% endif %}
+{% endblock content %}

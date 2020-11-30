@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Order Succes! | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="complete-container">
+    <div class="buy-now">
+        <div class="cart-info">
+            <p class="order-total">Total: <span class="price-span">€<span id="total-price">{{order.get_cart_total}}</span></span></p>
+            <p class="order-total">Items: <span class="price-span"><span id="total-price">{{order.get_cart_items}}</span></span></p>
+        </div>
+    </div>
+    <div class="order-summary">
+        <table class="order-table">
+            <thead class="table-head">
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </thead>
+            {% for item in items %}
+                <tr class="order-row">
+                    <td class="table-title"><a class="table-link" href="/thing/{{item.thing.id}}">{{item.thing.title}}</a></td>
+                    <td class="quantity">
+                        <input class="quantity-input" type="text" name="quantity" value="{{item.quantity}}">
+                    </td>
+                    <td class="price"><span class="price-span-table">€{{ item.get_total }}</span></td>
+                </tr>
+            {% endfor %}
+            <tr class="table-space"><td></td></tr>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

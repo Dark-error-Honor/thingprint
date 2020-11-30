@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+Sign Up | ThingPrint
+{% endblock title %}
+
+{% block content %}
+{% if form.errors %}
+<div style="position: absolute; left: 50%;">
+    <div class="signup-errors">
+        {% for error in form.errors.values %}
+            {{error}}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<div class="login-wrapper">
+    <div class="left-login">
+        <img src="{% static 'images/site_files/transparent/ThingPrint_Logo_Transparent.png' %}" alt="">
+    </div>
+    <div class="right-login">
+        <h1 class="header login-header">ThingPrint</h1>
+        <form method="POST" class='signup-form'> {% csrf_token %}
+            <h3 style='font-size: 1.5rem;' class="header">Sign Up</h3>
+            <div class="creds-signup">
+                {{form.as_p}}
+            </div>
+            <button class="button-cart" type="submit">Make Account</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

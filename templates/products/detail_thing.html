@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{{thing.title}} | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="item-container">
+    <div class="detail-wrapper">
+        <div class="left-detail">
+            {% if thing.image %}
+                <img src="/static/images/thing_files/{{thing.image}}" alt="{{thing.title}}">
+            {% else %}
+                <img src="/static/images/site_files/noimage.png" alt="{{thing.title}}">
+            {% endif %}
+        {% comment %} <div class="detail-box">
+            <h1 class="header">Print Settings: </h1>
+            <p>
+            {% lorem %}
+            </p>
+        </div> {% endcomment %}
+        {% if user.is_superuser %}
+        <div class="detail-actions">
+            <a href="/dashboard/edit/{{thing.id}}" class="button-cart">Edit this product</a>
+            <a onclick='return confirm("Are you sure you want to delete: {{thing.title}}?")' href="/dashboard/remove/{{thing.id}}" class="button-cart">Delete this product</a>
+        </div>
+        {% endif %}
+        </div>
+        <div class="right-detail">
+            <div class="detail-box">
+                <h1 class="header center">{{thing.title}}</h1>
+                <p class="thing-description" >{{thing.description}}</p>
+                <div class="add-to-cart">
+                    <p class="detail-price">€{{thing.price}}</p>
+                    <a class="button-cart" href="/add-cart/{{thing.id}}">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

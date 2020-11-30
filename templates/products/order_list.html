@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load math %}
+{% load static %}
+{% block title %}
+Cart | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="cart-container">
+    <div class="buy-now">
+    <div class="cart-info">
+        <p class="order-total">Items: <span class="price-span"><span id="total-price">{{order.get_cart_items}}</span></span></p>
+        <p class="order-total">Total: <span class="price-span">€<span id="total-price">{{order.get_cart_total}}</span></span></p>
+    </div>
+    <a href="/checkout" class="button-checkout">Checkout</a>
+</div>
+    <div class="order-summary">
+        <table class="order-table">
+            <thead class="table-head">
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </thead>
+            {% for item in things %}
+                <tr class="order-row">
+                    <td class="table-title"><a class="table-link" href="/thing/{{item.thing.id}}">{{item.thing.title}}</a></td>
+                    <td class="quantity">
+                        <a href="/decrement/{{item.id}}" class="table-quantity"><span class="material-icons">remove</span></a>
+                            <input class="quantity-input" type="text" name="quantity" value="{{item.quantity}}">
+                        <a href="/increment/{{item.id}}" class="table-quantity"><span class="material-icons">add</span></a>
+                    </td>
+                    <td class="price"><span class="price-span-table">€{{ item.get_total }}</span></td>
+                    <td class="remove"><a href="/del-cart/{{item.id}}"><span class="material-icons">delete</span></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock content %}

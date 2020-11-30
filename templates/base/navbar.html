@@ -1,0 +1,23 @@
+{% load static %}
+<nav>
+    <a href="/" class="nav-header"><img src="{% static 'images/site_files/transparent/ThingPrint_Logo_Transparent.png' %}" alt=""></a>
+    <ul class="nav-links">
+        <div class="left-links">
+            <li class="nav-link"><a href="/">Home</a></li>
+            {% comment %} <li class="nav-link"><a href="/about">About</a></li>
+            <li class="nav-link"><a href="/contact">Contact</a></li> {% endcomment %}
+            {% if user.is_superuser %}
+            <li class="nav-link"><a href="/dashboard">Dashboard</a></li>
+            {% endif %}
+        </div>
+        <div class="right-links">
+            {% if user.is_authenticated %}
+                <li class="nav-link"><a href="/cart"><span class="material-icons">shopping_cart</span></a></li>
+                <li class="nav-link"><a href="/auth/logout">Logout</a></li>
+            {% else %}
+                <li class="nav-link"><a href="/auth/login">Login</a></li>
+                <li class="nav-link"><a href="/auth/signup">Sign Up</a></li>
+            {% endif %}
+        </div>
+    </ul>
+</nav>

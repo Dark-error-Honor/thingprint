@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+Login | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="left-login">
+        <img src="{% static 'images/site_files/transparent/ThingPrint_Logo_Transparent.png' %}" alt="">
+    </div>
+    <div class="right-login">
+        <h1 class="header login-header">ThingPrint</h1>
+        <form method="POST" class='login-form'> {% csrf_token %}
+            <h3 style='font-size: 1.5rem;' class="header">Login</h3>
+            <div class="creds">
+                <input required type="text" name="username" placeholder="Username">
+                <input required type="password" name="password" placeholder="Password">
+            </div>
+            <button class="button-cart" type="submit">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

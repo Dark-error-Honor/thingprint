@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+Dashboard | ThingPrint
+{% endblock title %}
+
+{% block content %}
+{% if user.is_superuser %}
+<div class="dashboard-container">
+    <div class="left-nav-container">
+        <div class="left-navbar">
+            <a href="create" class="dashboard-item">
+                <h1 class="dashboard-title">Add Thing</h1>
+                <img class="dashboard-image" src={% static 'images/site_files/add_thing.png' %} alt="">
+            </a>
+            <hr>
+            <a href="manage" class="dashboard-item">
+                <h1 class="dashboard-title">Mange things</h1>
+                <img class="dashboard-image" src={% static 'images/site_files/list.png' %} alt="">
+            </a>
+            <hr>
+            <a href="/admin" class="dashboard-item">
+                <h1 class="dashboard-title">Admin Panel</h1>
+                <img class="dashboard-image" src={% static 'images/site_files/admin-panel.png' %} alt="">
+            </a>
+            <hr>
+            <a href="/admin/core/thing/" class="dashboard-item">
+                <h1 class="dashboard-title">Things</h1>
+                <img class="dashboard-image" src={% static 'images/site_files/products.png' %} alt="">
+            </a>
+            <hr>
+            <a href="/admin/logout" class="dashboard-item">
+                <h1 class="dashboard-title">Log Out</h1>
+                <img class="dashboard-image" src={% static 'images/site_files/logout.png' %} alt="">
+            </a>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="item-container">
+    <h1>U are not authorized</h1>
+</div>
+{% endif %}
+{% endblock content %}

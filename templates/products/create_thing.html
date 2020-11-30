@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Create Thin | ThingPrint
+{% endblock title %}
+
+{% block content %}
+<div class="item-container">
+  {% if user.is_superuser %}
+  <form class="create-form" method="POST" enctype='multipart/form-data'> {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value='Add Thing'>
+  </form>
+  {% else %}
+  <h1>You are not authenticated...</h1>
+  {% endif %}
+</div>
+{% endblock content %}
