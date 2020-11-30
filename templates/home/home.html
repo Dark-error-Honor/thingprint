@@ -7,7 +7,7 @@
         <div onclick="location.href='/thing/{{thing.id}}'" class="item">
             <div class="thing-image-wrapper">
                 {% if thing.image %}
-                <img class="thing-image" src="/static/images/thing_files/{{thing.image}}" alt="">
+                <img class="thing-image" src="/staticfiles/images/thing_files/{{thing.image}}" alt="">
                 {% else %}
                 <img class="thing-image" src={% static 'images/site_files/noimage.png'  %} alt="">
                 {% endif %}
